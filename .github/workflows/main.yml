@@ -1,0 +1,34 @@
+name: Monitor Diario de Ethereum
+
+on:
+  schedule:
+    - cron: '0 8 * * *'  # Se ejecutará automáticamente todos los días a las 8:00 AM UTC
+  workflow_dispatch:     # Esto te activa un botón para probarlo manualmente cuando quieras
+
+jobs:
+  actualizar-prediccion:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - name: Descargar el código
+      uses: actions/checkout@v3
+
+    - name: Configurar Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Instalar librerías de estadística
+      run: |
+        pip install yfinance prophet pandas numpy matplotlib
+
+    - name: Correr el modelo predictivo
+      run: python prediccion.py
+
+    - name: Guardar el gráfico actualizado
+      run: |
+        git config --global user.name "Robot Predictive"
+        git config --global user.email "robot@github.com"
+        git add grafico_cyberpunk_eth.png
+        git commit -m "Actualización diaria del gráfico: $(date)" || exit 0
+        git push
