@@ -57,3 +57,5 @@ plt.legend(facecolor='#111116', edgecolor='#2d2d35', labelcolor='white', loc='up
 
 # 8. Guardamos el gráfico final como archivo de imagen
 plt.savefig('grafico_cyberpunk_eth.png', dpi=300, bbox_inches='tight', facecolor=plt.gcf().get_facecolor())
+# 9. Guarda una tabla con las fechas y los precios exactos predichos
+prediccion[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].to_csv('precios_predichos.csv', index=False)
